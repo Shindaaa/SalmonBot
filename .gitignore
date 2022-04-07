@@ -1,0 +1,6 @@
+# Project exclude paths
+/target/
+.idea
+src/main/resources
+src/test
+SalmonBot.iml
