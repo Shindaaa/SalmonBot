@@ -3,6 +3,8 @@ package eu.shindapp.salmonbot.client;
 import com.jagrosh.jdautilities.command.CommandClient;
 import com.jagrosh.jdautilities.command.CommandClientBuilder;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
+import eu.shindapp.salmonbot.commands.SlashSuggestionCmd;
+import eu.shindapp.salmonbot.listeners.MessageListener;
 import eu.shindapp.salmonbot.utils.ConfigUtils;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -27,12 +29,15 @@ public class SalmonClient {
         builder.setActivity(Activity.watching("play.shindapp.eu"));
 
         builder.forceGuildOnly(ConfigUtils.getConfig("client.mainGuildId"));
-        builder.addSlashCommands();
+        builder.addSlashCommands(
+                new SlashSuggestionCmd(eventWaiter)
+        );
 
         CommandClient client = builder.build();
 
         JDABuilder jdaBuilder = JDABuilder.createDefault(ConfigUtils.getConfig("client.token"))
                 .addEventListeners(client, eventWaiter)
+                .addEventListeners(new MessageListener())
                 .setChunkingFilter(ChunkingFilter.ALL)
                 .setMemberCachePolicy(MemberCachePolicy.ALL)
                 .enableIntents(GatewayIntent.GUILD_MEMBERS)
