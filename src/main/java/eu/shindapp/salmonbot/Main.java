@@ -18,16 +18,9 @@ public class Main {
 
     public static void main(String[] args) {
 
-        sqlConnection = new SqlConnection(
-                ConfigUtils.getConfig("mysql.urlbase"),
-                ConfigUtils.getConfig("mysql.host"),
-                Integer.parseInt(ConfigUtils.getConfig("mysql.port")),
-                ConfigUtils.getConfig("mysql.database"),
-                ConfigUtils.getConfig("mysql.user"),
-                ConfigUtils.getConfig("mysql.pass")
-        );
+        sqlConnection = new SqlConnection("src/main/resources/database.db");
 
-        logger.info("Connecting to MySQL Database....");
+        logger.info("Connecting to SQLite Database....");
 
         try {
             sqlConnection.connect();
